@@ -1,4 +1,44 @@
-import React, { useReducer, useState, Component } from 'react';
+// import React, { useReducer, useState, Component } from 'react';
+import React, { useState, useEffect } from 'react';
+
+const App = () => {
+  const [name, setName] = useState('');
+  const [age, setAge] = useState(0);
+
+  // componentDidUpdate, si está vacio el callback, se llamará cada vez con cada cambio
+  useEffect(() => {
+    console.log('diUpdate efect');
+  });
+  
+  // componentDidMount (array vacio), sucede cuando el component se renderiza por primera vez
+  useEffect(() => {
+    console.log('didMount effect');
+
+    return () => {
+      console.log('WillUnMount');
+    }
+  }, []);
+
+  // si se le asignan propiedades o valores, se llamará cuando alguno de ellos cambie
+  useEffect(() => {
+    console.log('name cambió');
+  }, [name]);
+
+  useEffect(() => {
+    console.log('age cambió');
+  }, [age]);
+
+  useEffect(() => {
+    console.log('name o age cambiaron');
+  }, [name, age]);
+
+  return (
+    <div>
+      <input value={name} onChange={( { target: { value } }) => setName(value)} />
+      <input age={age} onChange={( {target: {value } }) => setAge(value)} />
+    </div>
+  ) 
+}
 
 // componente funcional
 // function App() {
@@ -47,49 +87,51 @@ import React, { useReducer, useState, Component } from 'react';
 // }
 
 // componente class
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: '',
-      password: ''
-    }
-  }
+// class App extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       email: '',
+//       password: ''
+//     }
+//   }
 
-  handleEmailChange = (event) => {
-    const { value } = event.target;
-    this.setState({ email: value });
-  }
+//   handleEmailChange = (event) => {
+//     const { value } = event.target;
+//     this.setState({ email: value });
+//   }
 
-  handlePasswordChange = (event) => {
-    const { value } = event.target;
-    this.setState({ password: value});
-  }
+//   handlePasswordChange = (event) => {
+//     const { value } = event.target;
+//     this.setState({ password: value});
+//   }
 
-  render() {
-    const { email } = this.state;
-    const { password } = this.state;
+//   render() {
+//     const { email } = this.state;
+//     const { password } = this.state;
   
-    const handleFormSubmit = (event) => {
-      event.preventDefault();
-      alert(`Usuario ${email} \n Contraseña ${password}`);
-    }
+//     const handleFormSubmit = (event) => {
+//       event.preventDefault();
+//       alert(`Usuario ${email} \n Contraseña ${password}`);
+//     }
     
-    return <div className="App">
-      <form onSubmit={handleFormSubmit}>
-        <h2>Iniciar Sersion</h2>
-        <label>
-          Correo
-          <input type='email' value={ email } onChange={ this.handleEmailChange } />
-        </label>
-        <label>
-          Contraseña
-          <input type='password' value= { password } onChange={ this.handlePasswordChange } />
-        </label>
-      </form>
-    </div>
-  }
+//     return <div className="App">
+//       <form onSubmit={handleFormSubmit}>
+//         <h2>Iniciar Sersion</h2>
+//         <label>
+//           Correo
+//           <input type='email' value={ email } onChange={ this.handleEmailChange } />
+//         </label>
+//         <label>
+//           Contraseña
+//           <input type='password' value= { password } onChange={ this.handlePasswordChange } />
+//         </label>
+//       </form>
+//     </div>
+//   }
   
-}
+// }
+
+
 
 export default App;
