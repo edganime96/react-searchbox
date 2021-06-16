@@ -1,44 +1,86 @@
 // import React, { useReducer, useState, Component } from 'react';
-import React, { useState, useEffect } from 'react';
+import { render } from '@testing-library/react';
+// import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+
+const jsonData = [{
+  key: '1',
+  name: 'Carmine',
+}, {
+  key: '2',
+  name: 'Augusto',
+}, {
+  key: '3',
+  name: 'Simon',
+}, {
+  key: '4',
+  name: 'Edgardo',
+}];
 
 const App = () => {
-  const [name, setName] = useState('');
-  const [age, setAge] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // componentDidUpdate, si está vacio el callback, se llamará cada vez con cada cambio
   useEffect(() => {
-    console.log('diUpdate efect');
-  });
-  
-  // componentDidMount (array vacio), sucede cuando el component se renderiza por primera vez
-  useEffect(() => {
-    console.log('didMount effect');
-
-    return () => {
-      console.log('WillUnMount');
-    }
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 4000);
   }, []);
 
-  // si se le asignan propiedades o valores, se llamará cuando alguno de ellos cambie
-  useEffect(() => {
-    console.log('name cambió');
-  }, [name]);
 
-  useEffect(() => {
-    console.log('age cambió');
-  }, [age]);
-
-  useEffect(() => {
-    console.log('name o age cambiaron');
-  }, [name, age]);
+  const renderData = () => {
+    /* el signo ? sirve para validar e indica que si no existe la funcion, la ignora */
+    return jsonData?.map((value, index) => (
+        <div key={value.key}>
+          <p>{value.name}</p>
+        </div>
+    ));
+  };
 
   return (
     <div>
-      <input value={name} onChange={( { target: { value } }) => setName(value)} />
-      <input age={age} onChange={( {target: {value } }) => setAge(value)} />
+      {isLoading ? <h2>Is Loading...</h2> : renderData()}
     </div>
-  ) 
+  );
 }
+
+// const App = () => {
+//   const [name, setName] = useState('');
+//   const [age, setAge] = useState(0);
+
+//   // componentDidUpdate, si está vacio el callback, se llamará cada vez con cada cambio
+//   useEffect(() => {
+//     console.log('diUpdate efect');
+//   });
+  
+//   // componentDidMount (array vacio), sucede cuando el component se renderiza por primera vez
+//   useEffect(() => {
+//     console.log('didMount effect');
+
+//     return () => {
+//       console.log('WillUnMount');
+//     }
+//   }, []);
+
+//   // si se le asignan propiedades o valores, se llamará cuando alguno de ellos cambie
+//   useEffect(() => {
+//     console.log('name cambió');
+//   }, [name]);
+
+//   useEffect(() => {
+//     console.log('age cambió');
+//   }, [age]);
+
+//   useEffect(() => {
+//     console.log('name o age cambiaron');
+//   }, [name, age]);
+
+//   return (
+//     <div>
+//       <input value={name} onChange={( { target: { value } }) => setName(value)} />
+//       <input age={age} onChange={( {target: {value } }) => setAge(value)} />
+//     </div>
+//   ) 
+// }
 
 // componente funcional
 // function App() {
